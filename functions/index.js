@@ -8,7 +8,7 @@ const user = require("./src/routes/user/user");
 const corsOptions = {
 	origin: [
 		"http://localhost:5173",
-		"https://your-app-name.netlify.app",
+		"https://cortexfrontend.netlify.app/",
 	],
 	credentials: true,
 };
