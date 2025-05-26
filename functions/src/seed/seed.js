@@ -1,26 +1,42 @@
+require("dotenv").config();
+const {defaultData} = require("./data");
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const config = functions.config();
 
-const {defaultData} = require("./data");
+let db = null;
 
-admin.initializeApp({
-	credential: admin.credential.cert({
-		"type": config.google.type,
-		"project_id": config.google.project_id,
-		"private_key_id": config.google.private_key_id,
-		"private_key": config.google.private_key,
-		"client_email": config.google.client_email,
-		"client_id": config.google.client_id,
-		"auth_uri": config.google.auth_uri,
-		"token_uri": config.google.token_uri,
-		"auth_provider_x509_cert_url": config.google.auth_provider_x509_cert_url,
-		"client_x509_cert_url": config.google.client_x509_cert_url,
-		"universe_domain": config.google.universe_domain,
-	}),
-});
+if (process.env.IS_DEV !== "true") {
+	admin.initializeApp({
+		credential: admin.credential.cert({
+			"type": config.google.type,
+			"project_id": config.google.project_id,
+			"private_key_id": config.google.private_key_id,
+			"private_key": config.google.private_key,
+			"client_email": config.google.client_email,
+			"client_id": config.google.client_id,
+			"auth_uri": config.google.auth_uri,
+			"token_uri": config.google.token_uri,
+			"auth_provider_x509_cert_url": config.google.auth_provider_x509_cert_url,
+			"client_x509_cert_url": config.google.client_x509_cert_url,
+			"universe_domain": config.google.universe_domain,
+		}),
+	});
+	db = admin.firestore();
+}
 
-const db = admin.firestore();
+
+if (process.env.IS_DEV === "true") {
+	admin.initializeApp({
+		projectId: "cortex-e091e",
+	});
+
+	db = admin.firestore();
+	db.settings({
+		host: "localhost:8080",
+		ssl: false,
+	});
+}
 
 async function seedData() {
 	try {
