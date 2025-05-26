@@ -5,9 +5,17 @@ const {authenticate} = require("./src/middleware/auth");
 const trafficStatsRoutes = require("./src/routes/trafficStats/trafficStats");
 const user = require("./src/routes/user/user");
 
+const corsOptions = {
+	origin: [
+		"http://localhost:5173",
+		"https://your-app-name.netlify.app",
+	],
+	credentials: true,
+};
+
 const app = express();
 app.use(express.json());
-app.use(cors({origin: true}));
+app.use(cors(corsOptions));
 
 app.use("/user", user);
 app.use("/stats", authenticate, trafficStatsRoutes);
