@@ -1,5 +1,6 @@
 # CORTEX TEST DESCRIPTION
-- you should have firebase client
+ATTENTION: you should have firebase client
+- open terminal, run
 ```js
 git clone https://github.com/Savinoff94/cortex-backend.git
 ```
@@ -25,7 +26,7 @@ cd ../
 firebase emulators:start
 ```
 
-- in previous terminal wich still in /functions folder, run following line to seed traffic data 
+- in ANOTHER terminal wich still in /functions folder, run following line to seed traffic data 
 ```js
 npm run seed
 ```
@@ -36,7 +37,7 @@ if there will be problems you can substitute
 const corsOptions = {
 	origin: [
 		"http://localhost:5173",
-		"https://cortexfrontend.netlify.app/",
+		"https://cortexfrontend.netlify.app",
 	],
 	credentials: true,
 };
